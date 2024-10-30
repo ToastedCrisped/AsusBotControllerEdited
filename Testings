@@ -117,7 +117,7 @@ local function connectChatListener(playerpower)
 
 
 				elseif command:sub(1, 7) == "follow" and table.find(alts, displayName) and cmdfollow then
-
+					followval = false
 					local playerName = command:sub(8)
 					local targetPlayer = SearchPlayers(playerName)
 					followval = true
@@ -133,8 +133,9 @@ local function connectChatListener(playerpower)
 							chatMessage("Player not found: " .. playerName)
 						end
 					end
-				elseif command:sub(1, 6) == "unfollow" and table.find(alts, displayName) and cmdunfollow then
+				elseif command:sub(1, 9) == "unfollow" and table.find(alts, displayName) and cmdunfollow then
 					followval = false
+					wait(1)
 				end
 			end
 		end
