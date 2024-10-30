@@ -750,14 +750,14 @@ local function bangplayer(targetPlayer)
 	if player and player.Character then
 			bangAnim = Instance.new("Animation")
 			bangAnim.AnimationId = "rbxassetid://148840371"
-			bang = humanoid:LoadAnimation(bangAnim)
+			bang = player:LoadAnimation(bangAnim)
 			bang:Play(0.1, 1, 1)
 			local bangOffet = CFrame.new(0, 0, 1.1)
 			bangloop = RunService.Stepped:Connect(function()
 			player.Character:SetPrimaryPartCFrame(targetHumanoidRootPart.CFrame * bangOffet)
 			end)
 		end
-	end	
+	end
 
 
 -- ;admin
