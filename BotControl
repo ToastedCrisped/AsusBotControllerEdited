@@ -116,6 +116,7 @@ if printcmd then
 	print(";tower [plr]                         |  makes a tower of bots")
 	print(";untower                             |  undo the tower")
 	print(";fix                                 |  try to fix the bot if glitched")
+	print(";do                                  |  annoy a player by banging them")
 end
 
 -- Services
@@ -1237,12 +1238,11 @@ local function connectChatListener(playerpower)
 							chatMessage("Player not found: " .. playerName)
 						end
 					end
-				elseif command:sub(1, 8) == "do" and table.find(bots, displayName) and cmddo then
-					disablebool()
-					dobool = false
-					local playerName = command:sub(9)
+				elseif command:sub(1, 6) == "do" and table.find(bots, displayName) and cmddo then
+					
+					local playerName = command:sub(8)
 					local targetPlayer = findPlayerByName(playerName)
-					dobool = true
+
 					if targetPlayer then
 						if index == channel then
 							chatMessage("Bots are now doing " .. targetPlayer.Name .. ".")
