@@ -1245,7 +1245,7 @@ local function connectChatListener(playerpower)
 					dobool = true
 					if targetPlayer then
 						if index == channel then
-							chatMessage("Bots are now doing " .. targetPlayer.Name .. "😛😛")
+							chatMessage("Bots are now doing " .. targetPlayer.Name .. ".")
 						end
 						bangplayer(targetPlayer)
 						wait(2)
