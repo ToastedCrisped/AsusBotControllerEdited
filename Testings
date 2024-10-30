@@ -111,10 +111,13 @@ local function connectChatListener(playerpower)
 		if playerpower.Name == host or table.find(Admins, playerpower.Name) then
 			if message:sub(1, #prefix) == prefix then
 				local command = message:sub(#prefix + 1)
-				if command == "status" and table.find(alts, displayName) and cmdstatus then
+				if command == "status" and cmdstatus and table.find(alts, displayName) then
 					chatMessage(displayName .. " (Bot " .. index .. ") is active!")
 					wait(2)
-
+					
+				elseif command:sub(1, 9) == "unfollow" and table.find(alts, displayName) and cmdunfollow then
+					followval = false
+					wait(1)
 
 				elseif command:sub(1, 7) == "follow" and table.find(alts, displayName) and cmdfollow then
 					followval = false
@@ -133,9 +136,6 @@ local function connectChatListener(playerpower)
 							chatMessage("Player not found: " .. playerName)
 						end
 					end
-				elseif command:sub(1, 9) == "unfollow" and table.find(alts, displayName) and cmdunfollow then
-					followval = false
-					wait(1)
 				end
 			end
 		end
