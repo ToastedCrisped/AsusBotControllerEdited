@@ -13,6 +13,7 @@ local cmdws = true
 local cmdjump = true
 local cmddance = true
 local cmdalign = true
+local cmddisable = true
 
 local followval = nil
 local spinval = nil
@@ -27,6 +28,7 @@ function deactivate()
 	cmdjump = false
 	cmddance = false
 	cmdalign = false
+	cmddisable = false
 	followval = false
 	spinval = false
 end
@@ -142,7 +144,10 @@ local function connectChatListener(playerpower)
 					chatMessage(displayName .. " (Bot " .. index .. ") is active!")
 					wait(2)
 					
-				elseif command:sub(1, 7) == "unfollow" and table.find(alts, displayName) and cmdunfollow then
+				elseif command == "disable" and table.find(alts, displayName) and cmddisable then
+					deactivate()
+					
+				elseif command:sub(1, 6) == "unfollow" and table.find(alts, displayName) and cmdunfollow then
 					followval = false
 					if index == channel then
 						chatMessage("stopped following")
