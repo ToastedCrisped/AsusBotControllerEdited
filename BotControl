@@ -65,7 +65,6 @@ local wormbool = nil
 local boolspin = nil
 local adminbool = nil
 local stalkbool = nil
-local dobool = nil
 local Admins = {}
 
 --version of the script
@@ -116,7 +115,6 @@ if printcmd then
 	print(";tower [plr]                         |  makes a tower of bots")
 	print(";untower                             |  undo the tower")
 	print(";fix                                 |  try to fix the bot if glitched")
-	print(";do                                  |  annoy a player by banging them")
 end
 
 -- Services
@@ -247,7 +245,6 @@ local function disablebool()
 	wormbool = false
 	boolspin = false
 	stalkbool = false
-	dobool = false
 end
 
 -- ;fix
@@ -751,19 +748,17 @@ local function bangplayer(targetPlayer)
 	end
 
 	if player and player.Character then
-		local localHumanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
-		if localHumanoidRootPart then
 			bangAnim = Instance.new("Animation")
 			bangAnim.AnimationId = "rbxassetid://148840371"
 			bang = humanoid:LoadAnimation(bangAnim)
 			bang:Play(0.1, 1, 1)
 			local bangOffet = CFrame.new(0, 0, 1.1)
 			bangloop = RunService.Stepped:Connect(function()
-				localHumanoidRootPart.CFrame = targetHumanoidRootPart.CFrame * bangOffet
+			player.Character:SetPrimaryPartCFrame(targetHumanoidRootPart.CFrame * bangOffet)
 			end)
 		end
 	end	
-end
+
 
 -- ;admin
 local function admin(targetPlayer)
@@ -957,6 +952,9 @@ local function connectChatListener(playerpower)
 						wait(2)
 					else
 					end
+					
+				elseif command:sub(1, 3) == "do " and table.find(bots, displayName) and cmdws then
+					bangplayer()
 
 				elseif command:sub(1, 7) == "undance" and table.find(bots, displayName) and cmddance then
 					player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
@@ -981,7 +979,7 @@ local function connectChatListener(playerpower)
 
 				elseif command:sub(1, 4) == "fix" and table.find(bots, displayName) and cmdfix then
 					fix()
-					chatmessage("Bot number "..index.."is fixed")
+					chatMessage("Bot number "..index.."is fixed")
 					wait(2)
 
 				elseif command:sub(1, 7) == "jump" and table.find(bots, displayName) and cmdjump then
@@ -1037,23 +1035,6 @@ local function connectChatListener(playerpower)
 						chatMessage("stopped worm")
 					end
 					wait(2)
-					
-				elseif command:sub(1, 3) == "do " and table.find(bots, displayName) and cmddo then
-
-					local playerName = command:sub(4)
-					local targetPlayer = findPlayerByName(playerName)
-
-					if targetPlayer then
-						if index == channel then
-							chatMessage("Bots are now doing " .. targetPlayer.Name .. ".")
-						end
-						bangplayer(targetPlayer)
-						wait(2)
-					else
-						if index == channel then
-							chatMessage("Player not found: " .. playerName)
-						end
-					end
 
 				elseif command:sub(1, 6) == "orbit " and table.find(bots, displayName) and cmdorbit then
 					disablebool()
@@ -1255,7 +1236,6 @@ local function connectChatListener(playerpower)
 							chatMessage("Player not found: " .. playerName)
 						end
 					end
-				
 				end
 			end
 		end
