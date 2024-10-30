@@ -979,7 +979,7 @@ local function connectChatListener(playerpower)
 					local playerName = command:sub(4)
 					local targetPlayer = findPlayerByName(playerName)
 					if index == channel then
-						chatMessage("Bots are now following " .. targetPlayer.Name .. "🥵🥵")
+						chatMessage("Bots are now doing " .. targetPlayer.Name .. "🥵🥵")
 					end
 					bangplayer(targetPlayer)
 					wait(2)
