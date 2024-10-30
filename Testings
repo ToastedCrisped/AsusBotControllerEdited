@@ -1,0 +1,109 @@
+local alts = getgenv().alts
+local host = getgenv().host
+local prefix = getgenv().prefix
+local numalts = getgenv().numalts
+
+local Players = game:GetService("Players")
+local player = game.Players.LocalPlayer
+local User = player.Name
+local RunService = game:GetService("RunService")
+local TCS = game:GetService("TextChatService")
+local VU = game:GetService("VirtualUser")
+
+local PlayerHost = game.Players:FindFirstChild(host)
+local altindex
+local channel = 1
+
+for v, alt in ipairs(alts) do
+	if User == alt then
+		index = v
+		break
+	end
+end
+
+local function PlayerName(name)
+	if name:lower() == "me" then
+		return game.Players:FindFirstChild(host)
+	end
+
+	if name:lower() == "random" then
+		local players = game.Players:GetPlayers()
+		if #players > 0 then
+			return players[math.random(1, #players)]
+		end
+	end
+
+	local bestMatch = nil
+	local bestMatchScore = 0
+
+	for _, plr in pairs(game.Players:GetPlayers()) do
+		local nameMatch = plr.Name:lower():find(name:lower())
+		local displayNameMatch = plr.DisplayName:lower():find(name:lower())
+
+		if nameMatch or displayNameMatch then
+			local score = (nameMatch and #plr.Name or 0)
+			if score > bestMatchScore then
+				bestMatchScore = score
+				bestMatch = plr
+			end
+		end
+	end
+
+	return bestMatch
+end
+
+local function chatMessage(s)
+	s = tostring(s)
+	if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+		TCS.TextChannels.RBXGeneral:SendAsync(s)
+	else
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(s, "All")
+	end
+end
+
+local function followPlayer(targetPlayer)
+	if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+		while targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") do
+			local humanoidRootPart = targetPlayer.Character.HumanoidRootPart
+			player.Character.Humanoid:MoveTo(humanoidRootPart.Position)
+			wait(0.1)
+		end
+	else
+		warn("Target player or their character is not valid.")
+	end
+end
+
+local function connectChatListener(playerpower)
+	playerpower.Chatted:Connect(function(message)
+		if playerpower.Name == host then
+			if message:sub(1, #prefix) == prefix then
+				local command = message:sub(#prefix + 1)
+				if command == "status" and table.find(alts, User) then
+					chatMessage(User .. " (Bot " .. index .. ") is active!")
+					wait(2)
+
+				elseif command:sub(1, 7) == "follow" and table.find(alts, User) then
+					
+					local playerName = command:sub(8)
+					local targetPlayer = PlayerName(playerName)
+					
+					if targetPlayer then
+						if index == channel then
+							chatMessage("Bots are now following " .. targetPlayer.Name .. ".")
+						end
+						followPlayer(targetPlayer)
+						wait(2)
+					else
+						if index == channel then
+							chatMessage("Player not found: " .. playerName)
+						end
+					end
+				end
+			end
+		end
+	end)
+end
+
+if PlayerHost then
+	connectChatListener(PlayerHost)
+end
