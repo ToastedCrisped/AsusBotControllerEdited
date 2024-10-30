@@ -52,7 +52,7 @@ end
 
 local function SearchPlayers(name)
 	if name:lower() == "me" then
-		return game.Players:FindFirstChild(owner)
+		return game.Players:FindFirstChild(host)
 	end
 
 	if name:lower() == "random" then
@@ -104,11 +104,11 @@ local function connectChatListener(playerpower)
 
 
 				elseif command:sub(1, 7) == "follow " and table.find(alts, displayName) then
-					
-					
+
+
 					local playerName = command:sub(8)
 					local targetPlayer = SearchPlayers(playerName)
-					
+
 					if targetPlayer then
 						if index == channel then
 							chatMessage("Bots are now following " .. targetPlayer.Name .. ".")
@@ -139,3 +139,5 @@ game.Players.PlayerAdded:Connect(function(player)
 		connectChatListener(player)
 	end
 end)
+
+
