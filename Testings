@@ -1,3 +1,4 @@
+local Use_Displayname = getgenv().Use_Displayname
 local alts = getgenv().alts
 local host = getgenv().host
 local prefix = getgenv().prefix
@@ -6,6 +7,7 @@ local numalts = getgenv().numalts
 local Players = game:GetService("Players")
 local player = game.Players.LocalPlayer
 local User = player.Name
+local displayName = player.DisplayName
 local RunService = game:GetService("RunService")
 local TCS = game:GetService("TextChatService")
 local VU = game:GetService("VirtualUser")
@@ -13,17 +15,44 @@ local VU = game:GetService("VirtualUser")
 local PlayerHost = game.Players:FindFirstChild(host)
 local altindex
 local channel = 1
+local Admins = {}
 
-for v, alt in ipairs(alts) do
-	if User == alt then
-		index = v
-		break
+if Use_Displayname then
+	for i, alt in ipairs(alts) do
+		if displayName == alt then
+			index = i
+			break
+		end
+	end
+else
+	for i, alt in ipairs(alts) do
+		if User == alt then
+			index = i
+			break
+		end
 	end
 end
 
-local function PlayerName(name)
+if not index then
+	if player.Name == host then
+	else
+		warn("No bot or owner corresponding with: " .. table.concat(alts, ", ") .. " or " .. host .. " for this instance.")
+		return
+	end
+end
+
+local function chatMessage(s)
+	s = tostring(s)
+	if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
+		TCS.TextChannels.RBXGeneral:SendAsync(s)
+	else
+		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(s, "All")
+	end
+end
+
+local function SearchPlayers(name)
 	if name:lower() == "me" then
-		return game.Players:FindFirstChild(host)
+		return game.Players:FindFirstChild(owner)
 	end
 
 	if name:lower() == "random" then
@@ -41,7 +70,7 @@ local function PlayerName(name)
 		local displayNameMatch = plr.DisplayName:lower():find(name:lower())
 
 		if nameMatch or displayNameMatch then
-			local score = (nameMatch and #plr.Name or 0)
+			local score = (nameMatch and #plr.Name or 0) + (displayNameMatch and #plr.DisplayName or 0)
 			if score > bestMatchScore then
 				bestMatchScore = score
 				bestMatch = plr
@@ -50,15 +79,6 @@ local function PlayerName(name)
 	end
 
 	return bestMatch
-end
-
-local function chatMessage(s)
-	s = tostring(s)
-	if TCS.ChatVersion == Enum.ChatVersion.TextChatService then
-		TCS.TextChannels.RBXGeneral:SendAsync(s)
-	else
-		game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(s, "All")
-	end
 end
 
 local function followPlayer(targetPlayer)
@@ -75,17 +95,19 @@ end
 
 local function connectChatListener(playerpower)
 	playerpower.Chatted:Connect(function(message)
-		if playerpower.Name == host then
+		if playerpower.Name == host or table.find(Admins, playerpower.Name) then
 			if message:sub(1, #prefix) == prefix then
 				local command = message:sub(#prefix + 1)
-				if command == "status" and table.find(alts, User) then
-					chatMessage(User .. " (Bot " .. index .. ") is active!")
+				if command == "status" and table.find(alts, displayName) then
+					chatMessage(displayName .. " (Bot " .. index .. ") is active!")
 					wait(2)
 
-				elseif command:sub(1, 7) == "follow" and table.find(alts, User) then
+
+				elseif command:sub(1, 7) == "follow " and table.find(alts, displayName) then
+					
 					
 					local playerName = command:sub(8)
-					local targetPlayer = PlayerName(playerName)
+					local targetPlayer = SearchPlayers(playerName)
 					
 					if targetPlayer then
 						if index == channel then
@@ -104,6 +126,16 @@ local function connectChatListener(playerpower)
 	end)
 end
 
+player.Chatted:Connect(function(message)
+
+end)
+
 if PlayerHost then
 	connectChatListener(PlayerHost)
 end
+
+game.Players.PlayerAdded:Connect(function(player)
+	if table.find(Admins, player.Name) then
+		connectChatListener(player)
+	end
+end)
