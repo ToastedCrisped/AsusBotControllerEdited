@@ -1,3 +1,4 @@
+
 --get configs
 local Use_Displayname = getgenv().Use_Displayname
 local bots = getgenv().bots
@@ -70,7 +71,7 @@ local dobool = nil
 local Admins = {}
 
 --version of the script
-print("Asu's bot controller VERSION: 0.2.1")
+print("Asu's bot controller VERSION: EDITED!!")
 
 --print cmds in console
 if printcmd then
@@ -117,6 +118,7 @@ if printcmd then
 	print(";tower [plr]                         |  makes a tower of bots")
 	print(";untower                             |  undo the tower")
 	print(";fix                                 |  try to fix the bot if glitched")
+	print(";do                                  |  annoy a player by clapping their cheeks")
 end
 
 -- Services
