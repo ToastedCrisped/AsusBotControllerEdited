@@ -65,6 +65,7 @@ local wormbool = nil
 local boolspin = nil
 local adminbool = nil
 local stalkbool = nil
+local dobool = nil
 local Admins = {}
 
 --version of the script
@@ -245,6 +246,7 @@ local function disablebool()
 	wormbool = false
 	boolspin = false
 	stalkbool = false
+	dobool = false
 end
 
 -- ;fix
@@ -751,7 +753,7 @@ local function bangplayer(targetPlayer)
 		local localHumanoidRootPart = player.Character:FindFirstChild("HumanoidRootPart")
 		if localHumanoidRootPart then
 			bangAnim = Instance.new("Animation")
-			bangAnim.AnimationId = not r15(speaker) and "rbxassetid://148840371" or "rbxassetid://5918726674"
+			bangAnim.AnimationId = "rbxassetid://148840371"
 			bang = humanoid:LoadAnimation(bangAnim)
 			bang:Play(0.1, 1, 1)
 			local bangOffet = CFrame.new(0, 0, 1.1)
@@ -1236,11 +1238,21 @@ local function connectChatListener(playerpower)
 						end
 					end
 				elseif command:sub(1, 8) == "do" and table.find(bots, displayName) and cmddo then
+					disablebool()
+					dobool = false
 					local playerName = command:sub(9)
 					local targetPlayer = findPlayerByName(playerName)
+					dobool = true
 					if targetPlayer then
+						if index == channel then
+							chatMessage("Bots are now doing " .. targetPlayer.Name .. "😛😛")
+						end
 						bangplayer(targetPlayer)
 						wait(2)
+					else
+						if index == channel then
+							chatMessage("Player not found: " .. playerName)
+						end
 					end
 				end
 			end
