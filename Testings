@@ -4,6 +4,19 @@ local host = getgenv().host
 local prefix = getgenv().prefix
 local numalts = getgenv().numalts
 
+local cmdstatus = true
+local cmdfollow = true
+local cmdunfollow = true
+local cmdspin = true
+local cmdunspin = true
+local cmdws = true
+local cmdjump = true
+
+local followval = nil
+local spinval = nil
+
+
+
 local Players = game:GetService("Players")
 local player = game.Players.LocalPlayer
 local User = player.Name
@@ -98,16 +111,16 @@ local function connectChatListener(playerpower)
 		if playerpower.Name == host or table.find(Admins, playerpower.Name) then
 			if message:sub(1, #prefix) == prefix then
 				local command = message:sub(#prefix + 1)
-				if command == "status" and table.find(alts, displayName) then
+				if command == "status" and table.find(alts, displayName) and cmdstatus then
 					chatMessage(displayName .. " (Bot " .. index .. ") is active!")
 					wait(2)
 
 
-				elseif command:sub(1, 7) == "follow " and table.find(alts, displayName) then
-
+				elseif command:sub(1, 7) == "follow" and table.find(alts, displayName) and cmdfollow then
 
 					local playerName = command:sub(8)
 					local targetPlayer = SearchPlayers(playerName)
+					followval = true
 
 					if targetPlayer then
 						if index == channel then
@@ -120,6 +133,8 @@ local function connectChatListener(playerpower)
 							chatMessage("Player not found: " .. playerName)
 						end
 					end
+				elseif command:sub(1, 6) == "unfollow" and table.find(alts, displayName) and cmdunfollow then
+					followval = false
 				end
 			end
 		end
@@ -139,5 +154,4 @@ game.Players.PlayerAdded:Connect(function(player)
 		connectChatListener(player)
 	end
 end)
-
 
