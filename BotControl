@@ -758,7 +758,7 @@ local function bangplayer(targetPlayer)
 			bang = humanoid:LoadAnimation(bangAnim)
 			bang:Play(0.1, 1, 1)
 			local bangOffet = CFrame.new(0, 0, 1.1)
-			cmddo = RunService.Stepped:Connect(function()
+			bangloop = RunService.Stepped:Connect(function()
 				localHumanoidRootPart.CFrame = targetHumanoidRootPart.CFrame * bangOffet
 			end)
 		end
@@ -1040,7 +1040,7 @@ local function connectChatListener(playerpower)
 					
 				elseif command:sub(1, 6) == "do" and table.find(bots, displayName) and cmddo then
 
-					local playerName = command:sub(8)
+					local playerName = command:sub(6)
 					local targetPlayer = findPlayerByName(playerName)
 
 					if targetPlayer then
