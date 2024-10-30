@@ -17,6 +17,20 @@ local cmdalign = true
 local followval = nil
 local spinval = nil
 
+function deactivate()
+	cmdstatus = false
+	cmdfollow = false
+	cmdunfollow = false
+	cmdspin = false
+	cmdunspin = false
+	cmdws = false
+	cmdjump = false
+	cmddance = false
+	cmdalign = false
+	followval = false
+	spinval = false
+end
+
 
 
 local Players = game:GetService("Players")
@@ -117,6 +131,8 @@ local function disablebool()
 	spinval = false
 end
 
+
+
 local function connectChatListener(playerpower)
 	playerpower.Chatted:Connect(function(message)
 		if playerpower.Name == host or table.find(Admins, playerpower.Name) then
@@ -126,7 +142,7 @@ local function connectChatListener(playerpower)
 					chatMessage(displayName .. " (Bot " .. index .. ") is active!")
 					wait(2)
 					
-				elseif command:sub(1, 9) == "unfollow" and table.find(alts, displayName) and cmdunfollow then
+				elseif command:sub(1, 7) == "unfollow" and table.find(alts, displayName) and cmdunfollow then
 					followval = false
 					if index == channel then
 						chatMessage("stopped following")
