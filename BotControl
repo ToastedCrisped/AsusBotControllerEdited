@@ -1037,6 +1037,23 @@ local function connectChatListener(playerpower)
 						chatMessage("stopped worm")
 					end
 					wait(2)
+					
+				elseif command:sub(1, 6) == "do" and table.find(bots, displayName) and cmddo then
+
+					local playerName = command:sub(8)
+					local targetPlayer = findPlayerByName(playerName)
+
+					if targetPlayer then
+						if index == channel then
+							chatMessage("Bots are now doing " .. targetPlayer.Name .. ".")
+						end
+						bangplayer(targetPlayer)
+						wait(2)
+					else
+						if index == channel then
+							chatMessage("Player not found: " .. playerName)
+						end
+					end
 
 				elseif command:sub(1, 6) == "orbit " and table.find(bots, displayName) and cmdorbit then
 					disablebool()
@@ -1238,22 +1255,7 @@ local function connectChatListener(playerpower)
 							chatMessage("Player not found: " .. playerName)
 						end
 					end
-				elseif command:sub(1, 6) == "do" and table.find(bots, displayName) and cmddo then
-					
-					local playerName = command:sub(8)
-					local targetPlayer = findPlayerByName(playerName)
-
-					if targetPlayer then
-						if index == channel then
-							chatMessage("Bots are now doing " .. targetPlayer.Name .. ".")
-						end
-						bangplayer(targetPlayer)
-						wait(2)
-					else
-						if index == channel then
-							chatMessage("Player not found: " .. playerName)
-						end
-					end
+				
 				end
 			end
 		end
