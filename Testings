@@ -11,6 +11,8 @@ local cmdspin = true
 local cmdunspin = true
 local cmdws = true
 local cmdjump = true
+local cmddance = true
+local cmdalign = true
 
 local followval = nil
 local spinval = nil
@@ -52,6 +54,10 @@ if not index then
 		warn("No bot or owner corresponding with: " .. table.concat(alts, ", ") .. " or " .. host .. " for this instance.")
 		return
 	end
+end
+
+if index then
+RunService:Set3dRenderingEnabled(false)
 end
 
 local function chatMessage(s)
@@ -122,7 +128,10 @@ local function connectChatListener(playerpower)
 					
 				elseif command:sub(1, 9) == "unfollow" and table.find(alts, displayName) and cmdunfollow then
 					followval = false
-					wait(1)
+					if index == channel then
+						chatMessage("stopped following")
+					end
+					wait(2)
 
 				elseif command:sub(1, 7) == "follow " and table.find(alts, displayName) and cmdfollow then
 					disablebool()
