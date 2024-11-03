@@ -830,7 +830,7 @@ local function HeadBang(targetPlayer)
 		local bangOffet = CFrame.new(0, 1, -1.1)
 		bangloop = RunService.Stepped:Connect(function()
 			player.Character.HumanoidRootPart.CFrame = targetHead.CFrame * bangOffet
-			local CharPos = player.Character.PrimaryPart.Position
+			local CharPos = targetPlayer.Character.PrimaryPart.Position
 			local tpos = player.Character.HumanoidRootPart.Position
 			local TPos = Vector3.new(tpos.X,CharPos.Y,tpos.Z)
 			local NewCFrame = CFrame.new(CharPos,TPos)
