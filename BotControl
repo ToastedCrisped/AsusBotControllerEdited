@@ -119,6 +119,7 @@ if printcmd then
 	print(";untower                             |  undo the tower")
 	print(";fix                                 |  try to fix the bot if glitched")
 	print(";do                                  |  annoy a player by clapping their cheeks")
+	print(";rocket                              |  make ur bots fly away")
 end
 
 -- Services
@@ -791,7 +792,7 @@ local root = player.Character.HumanoidRootPart
 		Spin.AngularVelocity = Vector3.new(0, 100, 0)
 		local BV = Instance.new("BodyVelocity")
 		BV.MaxForce = Vector3.new(0,50000,0)
-		BV.Velocity = Vector3.new(0,150,0)
+		BV.Velocity = Vector3.new(0,200,0)
 		wait(2)
 		Spin.Parent = root
 		wait(5)
@@ -1034,8 +1035,6 @@ local function connectChatListener(playerpower)
 					wait(2)
 					
 				elseif command:sub(1, 7) == "rocket" and table.find(bots, displayName) and cmdrocket then
-					rocketaway()
-					wait(2)
 					if index == channel then
 						chatMessage("bots will now launch in 3..")
 						wait(2)
@@ -1045,6 +1044,8 @@ local function connectChatListener(playerpower)
 						wait(2)
 						chatMessage("BRUUUUUU-WSHHHHH")
 					end
+					rocketaway()
+					wait(2)
 
 				elseif command:sub(1, 5) == "arch " and table.find(bots, displayName) and cmdarch then
 					disablebool()
