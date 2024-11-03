@@ -48,6 +48,7 @@ local cmduntower = true
 local cmdfix = true
 local cmddo = true
 local cmdundo = true
+local cmdrocket = true
 
 local towerbool = nil
 local followbool = nil
@@ -781,6 +782,23 @@ local function unbangplayer(targetPlayer)
 	end
 end
 
+local function rocketaway(targetPlayer)
+	
+local root = player.Character.HumanoidRootPart
+	if player and player.Character then
+		local Spin = Instance.new("BodyAngularVelocity")
+		Spin.Name = "Spinning"
+		Spin.Parent = root
+		Spin.MaxTorque = Vector3.new(0, math.huge, 0)
+		Spin.AngularVelocity = Vector3.new(0, 100, 0)
+		local BV = Instance.new("BodyVelocity")
+		BV.MaxForce = Vector3.new(0,5000,0)
+		BV.Velocity = Vector3.new(0,20,0)
+		wait(5)
+		BV.Parent = root
+	end
+end
+
 
 -- ;admin
 local function admin(targetPlayer)
@@ -1008,6 +1026,10 @@ local function connectChatListener(playerpower)
 					disablebool()
 					local circlearg = tonumber(command:sub(8)) or 8
 					tpcircle(circlearg)
+					wait(2)
+					
+				elseif command:sub(1, 7) == "rocket" and table.find(bots, displayName) and cmdrocket then
+					rocketaway()
 					wait(2)
 
 				elseif command:sub(1, 5) == "arch " and table.find(bots, displayName) and cmdarch then
