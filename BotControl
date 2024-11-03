@@ -795,7 +795,7 @@ local root = player.Character.HumanoidRootPart
 		BV.Velocity = Vector3.new(0,200,0)
 		wait(2)
 		Spin.Parent = root
-		wait(5)
+		wait(4)
 		BV.Parent = root
 		wait(5)
 		player.Character:BreakJoints()
