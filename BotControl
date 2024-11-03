@@ -790,8 +790,8 @@ local root = player.Character.HumanoidRootPart
 		Spin.MaxTorque = Vector3.new(0, math.huge, 0)
 		Spin.AngularVelocity = Vector3.new(0, 100, 0)
 		local BV = Instance.new("BodyVelocity")
-		BV.MaxForce = Vector3.new(0,5000,0)
-		BV.Velocity = Vector3.new(0,100,0)
+		BV.MaxForce = Vector3.new(0,50000,0)
+		BV.Velocity = Vector3.new(0,150,0)
 		wait(2)
 		Spin.Parent = root
 		wait(5)
@@ -1034,6 +1034,8 @@ local function connectChatListener(playerpower)
 					wait(2)
 					
 				elseif command:sub(1, 7) == "rocket" and table.find(bots, displayName) and cmdrocket then
+					local launch = command:sub(8)
+					rocketaway(launch)
 					if index == channel then
 						chatMessage("bots will now launch in 3..")
 						wait(2)
@@ -1043,7 +1045,6 @@ local function connectChatListener(playerpower)
 						wait(2)
 						chatMessage("BRUUUUUU-WSHHHHH")
 					end
-					rocketaway()
 					wait(2)
 
 				elseif command:sub(1, 5) == "arch " and table.find(bots, displayName) and cmdarch then
