@@ -1103,13 +1103,12 @@ local function connectChatListener(playerpower)
 					end
 					
 				elseif command:sub(1, 15) == "unheadbang " and table.find(bots, displayName) and cmdunheadbang then
-					
+					headbangbool = false
 						if index == channel then
 							chatMessage("Bots stopped headbanging")
-					end
-					headbangbool = false
-					if headbangbool == false then
-						bang:Stop()
+					     end
+					if player and player.Character then
+						bang:Stop(0.1, 1, 1)
 						bangloop:Disconnect()
 					end
 						wait(2)
