@@ -832,7 +832,7 @@ local function HeadBang(targetPlayer)
 		bang:Play(0.1, 1, 1)
 		bang:AdjustSpeed(5)
 		local bangOffet = CFrame.new(0, 1, -1.1)
-		if headbangbool ~= true then
+		if headbangbool == false then
 			bangloop = bangloop:Disconnect()
 			bang:Stop()
 			else
