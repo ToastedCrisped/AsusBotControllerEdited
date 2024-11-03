@@ -980,15 +980,15 @@ local function connectChatListener(playerpower)
 					disablebool()
 					local playerName = command:sub(4)
 					local targetPlayer = findPlayerByName(playerName)
+					dobool = true
 					if index == channel then
 						chatMessage("Bots are now doing " .. targetPlayer.Name .. "🥵🥵")
 					end
-					if targetPlayer then
 					bangplayer(targetPlayer)
 						wait(2)
-						end
+						
 
-				elseif command:sub(1, 5) == "undo " and table.find(bots, displayName) and cmdundo then
+				--[[elseif command:sub(1, 5) == "undo " and table.find(bots, displayName) and cmdundo then
 					dobool = false
 					local playerName = command:sub(6)
 					local targetPlayer = findPlayerByName(playerName)
@@ -996,7 +996,7 @@ local function connectChatListener(playerpower)
 						chatMessage("bots no longer have cheeks to play with.. " .. targetPlayer.Name .. "😔😔")
 					end
 					unbangplayer(targetPlayer)
-					wait(2)
+					wait(2)]]
 
 				elseif command:sub(1, 7) == "undance" and table.find(bots, displayName) and cmddance then
 					player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
