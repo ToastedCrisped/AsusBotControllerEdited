@@ -1035,6 +1035,7 @@ local function connectChatListener(playerpower)
 					
 				elseif command:sub(1, 7) == "rocket" and table.find(bots, displayName) and cmdrocket then
 					rocketaway()
+					wait(2)
 					if index == channel then
 						chatMessage("bots will now launch in 3..")
 						wait(2)
@@ -1044,7 +1045,6 @@ local function connectChatListener(playerpower)
 						wait(2)
 						chatMessage("BRUUUUUU-WSHHHHH")
 					end
-					wait(2)
 
 				elseif command:sub(1, 5) == "arch " and table.find(bots, displayName) and cmdarch then
 					disablebool()
