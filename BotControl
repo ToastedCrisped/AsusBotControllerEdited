@@ -827,7 +827,7 @@ local function HeadBang(targetPlayer)
 		bang = player.Character.Humanoid:LoadAnimation(bangAnim)
 		bang:Play(0.1, 1, 1)
 		bang:AdjustSpeed(5)
-		local bangOffet = CFrame.new(0, 1, 1.1)
+		local bangOffet = CFrame.new(0, 1, -1.1)
 		bangloop = RunService.Stepped:Connect(function()
 			player.Character.HumanoidRootPart.CFrame = targetHead.CFrame * bangOffet
 			local CharPos = player.Character.PrimaryPart.Position
