@@ -1045,8 +1045,10 @@ local function connectChatListener(playerpower)
 						wait(2)
 						chatMessage("BRUUUUUU-WSHHHHH")
 					end
+					if launch then
 					rocketaway(launch)
-					wait(2)
+						wait(2)
+						end
 
 				elseif command:sub(1, 5) == "arch " and table.find(bots, displayName) and cmdarch then
 					disablebool()
