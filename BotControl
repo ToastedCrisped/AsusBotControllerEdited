@@ -810,7 +810,7 @@ local function rocketaway(targetPlayer)
 	end
 end
 
-local function HeadBang(targetPlayer)
+local function HeadBang(targetPlayer, speed)
 	if not targetPlayer or not targetPlayer.Character then
 		return
 	end
@@ -830,7 +830,7 @@ local function HeadBang(targetPlayer)
 		bangAnim.AnimationId = "rbxassetid://148840371"
 		bang = player.Character.Humanoid:LoadAnimation(bangAnim)
 		bang:Play(0.1, 1, 1)
-		bang:AdjustSpeed(5)
+		bang:AdjustSpeed(speed)
 		local bangOffet = CFrame.new(0, 1, -1.1)
 		bangloop = RunService.Stepped:Connect(function()
 			player.Character.HumanoidRootPart.CFrame = targetHead.CFrame * bangOffet
@@ -1060,14 +1060,16 @@ local function connectChatListener(playerpower)
 					
 				elseif command:sub(1, 9) == "headbang " and table.find(bots, displayName) and cmdheadbang then
 					disablebool()
-					local playerName = command:sub(10)
+					local args = command:split(" ")
+					local playerName = args[2] 
+					local speed = tonumber(args[3])
 					local targetPlayer = findPlayerByName(playerName)
 					headbangbool = true
 					if targetPlayer then
 						if index == channel then
 							chatMessage("Bots are now headbanging " .. targetPlayer.Name .. "🥵🥵")
 						end
-						HeadBang(targetPlayer)
+						HeadBang(targetPlayer, speed)
 						wait(2)
 					end
 
