@@ -832,7 +832,7 @@ local function HeadBang(targetPlayer)
 		bang:Play(0.1, 1, 1)
 		bang:AdjustSpeed(5)
 		local bangOffet = CFrame.new(0, 1, -1.1)
-		if headbangbool ~= false then
+		if headbangbool ~= true then
 		bangloop = RunService.Stepped:Connect(function()
 			player.Character.HumanoidRootPart.CFrame = targetHead.CFrame * bangOffet
 			local CharPos = player.Character.PrimaryPart.Position
@@ -841,10 +841,6 @@ local function HeadBang(targetPlayer)
 			local NewCFrame = CFrame.new(CharPos,TPos)
 			player.Character:SetPrimaryPartCFrame(NewCFrame)
 			end)
-		end
-		if headbangbool == false then
-			bangloop:Disconnect()
-			bang:Stop()
 		end
 	end
 end
