@@ -832,6 +832,7 @@ local function HeadBang(targetPlayer)
 		bang:Play(0.1, 1, 1)
 		bang:AdjustSpeed(5)
 		local bangOffet = CFrame.new(0, 1, -1.1)
+if headbangbool ~= false then
 		bangloop = RunService.Stepped:Connect(function()
 			player.Character.HumanoidRootPart.CFrame = targetHead.CFrame * bangOffet
 			local CharPos = player.Character.PrimaryPart.Position
@@ -839,12 +840,9 @@ local function HeadBang(targetPlayer)
 			local TPos = Vector3.new(tpos.X,CharPos.Y,tpos.Z)
 			local NewCFrame = CFrame.new(CharPos,TPos)
 			player.Character:SetPrimaryPartCFrame(NewCFrame)
-			
-			if headbangbool == false then
-				bang:Stop()
-				bangloop:Disconnect()
+		
+			end)
 			end
-		end)
 	end
 end
 
@@ -941,6 +939,7 @@ local function connectChatListener(playerpower)
 					dobool = false
 					cmdrocket = false
 					cmdheadbang = false
+					cmdunheadbang = false
 					Admins = {}
 					adminNotConnected = {}
 					chatMessage("quit")
@@ -1058,10 +1057,22 @@ local function connectChatListener(playerpower)
 						bangplayer(targetPlayer)
 						wait(2)
 					end
+					
+				elseif command:sub(1, 9) == "headbang " and table.find(bots, displayName) and cmdheadbang then
+					disablebool()
+					local playerName = command:sub(10)
+					local targetPlayer = findPlayerByName(playerName)
+					headbangbool = true
+					if targetPlayer then
+						if index == channel then
+							chatMessage("Bots are now headbanging " .. targetPlayer.Name .. "🥵🥵")
+						end
+						HeadBang(targetPlayer)
+						wait(2)
+					end
 
 				elseif command:sub(1, 5) == "undo " and table.find(bots, displayName) and cmdundo then
 					dobool = false
-					headbangbool = false
 					local playerName = command:sub(6)
 					local targetPlayer = findPlayerByName(playerName)
 					if index == channel then
@@ -1095,21 +1106,13 @@ local function connectChatListener(playerpower)
 					rocketaway()
 					wait(2)
 					
-				elseif command:sub(1, 9) == "headbang " and table.find(bots, displayName) and cmdheadbang then
-					disablebool()
-					local playerName = command:sub(10)
-					local targetPlayer = findPlayerByName(playerName)
-					headbangbool = true
-					if targetPlayer then
-						if index == channel then
-							chatMessage("Bots are now headbanging " .. targetPlayer.Name .. "🥵🥵")
-						end
-						HeadBang(targetPlayer)
-						wait(2)
+				elseif command:sub(1, 10) == "unheadbang" and table.find(bots, displayName) and cmdunheadbang then
+					headbangbool = false
+					if index == channel then
+						chatMessage("stopped following")
 					end
+					wait(2)
 					
-			
-				
 				elseif command:sub(1, 5) == "arch " and table.find(bots, displayName) and cmdarch then
 					disablebool()
 					local archarg = tonumber(command:sub(6)) or 8
