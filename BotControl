@@ -810,7 +810,7 @@ local function rocketaway(targetPlayer)
 	end
 end
 
---[[local function HeadBang(targetPlayer, speed)
+local function HeadBang(targetPlayer, speed)
 	if not targetPlayer or not targetPlayer.Character then
 		return
 	end
@@ -842,8 +842,7 @@ end
 			end)
 		
 	end
-end]]--
-
+end
 
 -- ;admin
 local function admin(targetPlayer)
@@ -1069,7 +1068,7 @@ local function connectChatListener(playerpower)
 						if index == channel then
 							chatMessage("Bots are now headbanging " .. targetPlayer.Name .. "🥵🥵")
 						end
-						--HeadBang(targetPlayer, speed)
+						HeadBang(targetPlayer, speed)
 						wait(2)
 					end
 
