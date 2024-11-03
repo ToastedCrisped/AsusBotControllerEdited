@@ -978,17 +978,18 @@ local function connectChatListener(playerpower)
 
 				elseif command:sub(1, 3) == "do " and table.find(bots, displayName) and cmddo then
 					disablebool()
-					--dobool = true
 					local playerName = command:sub(4)
 					local targetPlayer = findPlayerByName(playerName)
 					if index == channel then
 						chatMessage("Bots are now doing " .. targetPlayer.Name .. "🥵🥵")
 					end
+					if targetPlayer then
 					bangplayer(targetPlayer)
-					wait(2)
+						wait(2)
+						end
 
 				elseif command:sub(1, 5) == "undo " and table.find(bots, displayName) and cmdundo then
-					--dobool = false
+					dobool = false
 					local playerName = command:sub(6)
 					local targetPlayer = findPlayerByName(playerName)
 					if index == channel then
