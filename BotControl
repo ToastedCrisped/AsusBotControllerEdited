@@ -750,7 +750,7 @@ local function stalkPlayer(targetPlayer)
 	end
 end
 
-local function bangplayer(targetPlayer)
+local function bangplayer(targetPlayer, speed)
 	if not targetPlayer or not targetPlayer.Character then
 		return
 	end
@@ -765,7 +765,7 @@ local function bangplayer(targetPlayer)
 		bangAnim.AnimationId = "rbxassetid://148840371"
 		bang = player.Character.Humanoid:LoadAnimation(bangAnim)
 		bang:Play(0.1, 1, 1)
-		bang:AdjustSpeed(5)
+		bang:AdjustSpeed(speed)
 		local bangOffet = CFrame.new(0, 0, 1.1)
 		bangloop = RunService.Stepped:Connect(function()
 			player.Character:SetPrimaryPartCFrame(targetHumanoidRootPart.CFrame * bangOffet)
@@ -1045,14 +1045,16 @@ local function connectChatListener(playerpower)
 
 				elseif command:sub(1, 3) == "do " and table.find(bots, displayName) and cmddo then
 					disablebool()
-					local playerName = command:sub(4)
+					local args = command:split(" ")
+					local playerName = args[2] 
+					local speed = tonumber(args[3])
 					local targetPlayer = findPlayerByName(playerName)
 					dobool = true
 					if targetPlayer then
 						if index == channel then
 							chatMessage("Bots are now doing " .. targetPlayer.Name .. "🥵🥵")
 						end
-						bangplayer(targetPlayer)
+						bangplayer(targetPlayer, speed)
 						wait(2)
 					end
 					
