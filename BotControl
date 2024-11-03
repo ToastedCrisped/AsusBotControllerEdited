@@ -759,12 +759,7 @@ local function bangplayer(targetPlayer, speed)
 	if not targetHumanoidRootPart then
 		return
 	end
-	bangDied = targetPlayer.Character.FindFirstChild("Humanoid").Died:Connect(function()
-		bangLoop = bangLoop:Disconnect()
-		bang:Stop()
-		bangAnim:Destroy()
-		bangDied:Disconnect()
-	end)
+
 	if player and player.Character then
 		bangAnim = Instance.new("Animation")
 		bangAnim.AnimationId = "rbxassetid://148840371"
@@ -837,12 +832,7 @@ local function HeadBang(targetPlayer, speed)
 		bang:Play(0.1, 1, 1)
 		bang:AdjustSpeed(speed)
 		local bangOffet = CFrame.new(0, 1, -1.1)
-		bangDied = targetPlayer.Character.FindFirstChild("Humanoid").Died:Connect(function()
-			bangLoop = bangLoop:Disconnect()
-			bang:Stop()
-			bangAnim:Destroy()
-			bangDied:Disconnect()
-		end)
+
 		bangloop = RunService.Stepped:Connect(function()
 			player.Character.HumanoidRootPart.CFrame = targetHead.CFrame * bangOffet
 			local CharPos = player.Character.PrimaryPart.Position
