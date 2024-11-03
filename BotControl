@@ -810,7 +810,7 @@ local function rocketaway(targetPlayer)
 	end
 end
 
-local function HeadBang(targetPlayer, speed)
+--[[local function HeadBang(targetPlayer, speed)
 	if not targetPlayer or not targetPlayer.Character then
 		return
 	end
@@ -832,7 +832,6 @@ local function HeadBang(targetPlayer, speed)
 		bang:Play(0.1, 1, 1)
 		bang:AdjustSpeed(speed)
 		local bangOffet = CFrame.new(0, 1, -1.1)
-
 		bangloop = RunService.Stepped:Connect(function()
 			player.Character.HumanoidRootPart.CFrame = targetHead.CFrame * bangOffet
 			local CharPos = player.Character.PrimaryPart.Position
@@ -843,7 +842,7 @@ local function HeadBang(targetPlayer, speed)
 			end)
 		
 	end
-end
+end]]--
 
 
 -- ;admin
@@ -1070,7 +1069,7 @@ local function connectChatListener(playerpower)
 						if index == channel then
 							chatMessage("Bots are now headbanging " .. targetPlayer.Name .. "🥵🥵")
 						end
-						HeadBang(targetPlayer, speed)
+						--HeadBang(targetPlayer, speed)
 						wait(2)
 					end
 
