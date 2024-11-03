@@ -825,7 +825,7 @@ local function HeadBang(targetPlayer)
 		return
 	end
 
-	if headbangbool and player and player.Character then
+	if player and player.Character then
 		bangAnim = Instance.new("Animation")
 		bangAnim.AnimationId = "rbxassetid://148840371"
 		bang = player.Character.Humanoid:LoadAnimation(bangAnim)
@@ -840,6 +840,10 @@ local function HeadBang(targetPlayer)
 			local NewCFrame = CFrame.new(CharPos,TPos)
 			player.Character:SetPrimaryPartCFrame(NewCFrame)
 			
+			if headbangbool == false then
+				bang:Stop()
+				bangloop:Disconnect()
+			end
 		end)
 	end
 end
@@ -1057,6 +1061,7 @@ local function connectChatListener(playerpower)
 
 				elseif command:sub(1, 5) == "undo " and table.find(bots, displayName) and cmdundo then
 					dobool = false
+					headbangbool = false
 					local playerName = command:sub(6)
 					local targetPlayer = findPlayerByName(playerName)
 					if index == channel then
@@ -1103,18 +1108,8 @@ local function connectChatListener(playerpower)
 						wait(2)
 					end
 					
-				elseif command:sub(1, 10) == "unheadbang " and table.find(bots, displayName) and cmdunheadbang then
-					headbangbool = false
-						if index == channel then
-							chatMessage("Bots stopped headbanging")
-					     end
-					if player and player.Character then
-						bang:Stop(0.1, 1, 1)
-						bangloop:Disconnect()
-					end
-						wait(2)
-					
-					
+			
+				
 				elseif command:sub(1, 5) == "arch " and table.find(bots, displayName) and cmdarch then
 					disablebool()
 					local archarg = tonumber(command:sub(6)) or 8
