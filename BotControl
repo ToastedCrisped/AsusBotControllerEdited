@@ -841,10 +841,10 @@ local function HeadBang(targetPlayer)
 			local NewCFrame = CFrame.new(CharPos,TPos)
 			player.Character:SetPrimaryPartCFrame(NewCFrame)
 			end)
-		else
-			bangloop:Disconnect()
+		elseif headbangbool == false then
 			bang:Stop()
-			end
+			bangloop:Disconnect()
+		end
 	end
 end
 
