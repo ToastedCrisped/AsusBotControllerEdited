@@ -753,16 +753,16 @@ local function bangplayer(targetPlayer)
 	end
 
 	if player and player.Character then
-			bangAnim = Instance.new("Animation")
-			bangAnim.AnimationId = "rbxassetid://148840371"
-			bang = player.Character.Humanoid:LoadAnimation(bangAnim)
-		    bang:Play(0.1, 1, 1)
-		    bang:AdjustSpeed(5)
-			local bangOffet = CFrame.new(0, 0, 1.1)
-			bangloop = RunService.Stepped:Connect(function()
+		bangAnim = Instance.new("Animation")
+		bangAnim.AnimationId = "rbxassetid://148840371"
+		bang = player.Character.Humanoid:LoadAnimation(bangAnim)
+		bang:Play(0.1, 1, 1)
+		bang:AdjustSpeed(5)
+		local bangOffet = CFrame.new(0, 0, 1.1)
+		bangloop = RunService.Stepped:Connect(function()
 			player.Character:SetPrimaryPartCFrame(targetHumanoidRootPart.CFrame * bangOffet)
-			end)
-		end
+		end)
+	end
 end
 
 local function unbangplayer(targetPlayer)
@@ -975,7 +975,7 @@ local function connectChatListener(playerpower)
 						wait(2)
 					else
 					end
-					
+
 				elseif command:sub(1, 3) == "do " and table.find(bots, displayName) and cmddo then
 					disablebool()
 					dobool = true
@@ -986,7 +986,7 @@ local function connectChatListener(playerpower)
 					end
 					bangplayer(targetPlayer)
 					wait(2)
-					
+
 				elseif command:sub(1, 5) == "undo " and table.find(bots, displayName) and cmdundo then
 					dobool = false
 					local playerName = command:sub(6)
