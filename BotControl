@@ -832,10 +832,6 @@ local function HeadBang(targetPlayer)
 		bang:Play(0.1, 1, 1)
 		bang:AdjustSpeed(5)
 		local bangOffet = CFrame.new(0, 1, -1.1)
-		if headbangbool == false then
-			bangloop = bangloop:Disconnect()
-			bang:Stop()
-			else
 		bangloop = RunService.Stepped:Connect(function()
 			player.Character.HumanoidRootPart.CFrame = targetHead.CFrame * bangOffet
 			local CharPos = player.Character.PrimaryPart.Position
@@ -844,7 +840,7 @@ local function HeadBang(targetPlayer)
 			local NewCFrame = CFrame.new(CharPos,TPos)
 			player.Character:SetPrimaryPartCFrame(NewCFrame)
 			end)
-		end
+		
 	end
 end
 
@@ -1113,6 +1109,8 @@ local function connectChatListener(playerpower)
 					if index == channel then
 						chatMessage("stopped headbangin")
 					end
+					bang:Stop()
+					bangloop = bangloop:Disconnect()
 					wait(2)
 					
 				elseif command:sub(1, 5) == "arch " and table.find(bots, displayName) and cmdarch then
